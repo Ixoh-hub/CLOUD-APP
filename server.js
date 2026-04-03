@@ -24,7 +24,8 @@ app.post("/posts", async (req, res) => {
     );
     res.json(result.rows[0]);
   } catch (err) {
-    console.error(err.message);
+    console.error(err);
+    return res.status(500).json({ error: "Unable to create post", detail: err.message || err.toString() });
   }
 });
 
@@ -82,6 +83,6 @@ app.delete("/posts/:id", async (req, res) => {
 
 // PORT
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
 });
